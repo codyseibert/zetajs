@@ -9,7 +9,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceRoot}/examples/bouncer.js"
+      "program": "${workspaceRoot}/examples/belong.js"
     }
   ]
 }

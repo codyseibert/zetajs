@@ -24,6 +24,9 @@ const Z = function (input) {
       transform (fun) {
         return ZI(fun(value));
       },
+      scope (fun) {
+        return ZI(fun(value));
+      },
       log () {
         return this.tap(n => console.log(JSON.stringify(n, null, 0)));
       },
@@ -84,6 +87,26 @@ const Z = function (input) {
       },
       isFalsy () {
         return ZI(value.filter(n => !n));
+      },
+      sort () {
+        const copy = [].concat(value)
+        copy.sort((a, b) => a - b);
+        return ZI(copy);
+      },
+      convert (from, to) {
+        if (value === from) {
+          return ZI(to);
+        } else {
+          return ZI(value);
+        }
+      },
+      indexOf (fun) {
+        for (let i = 0; i < value.length; i++) {
+           if (fun(value[i])) {
+            return ZI(i);
+          }
+        }
+        return ZI(-1);
       }
     }
   }
