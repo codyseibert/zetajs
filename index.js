@@ -1,67 +1,49 @@
 const Z = function (input) { 
-  function ZI (value, parent) {
-    const ret = {
+  function ZI (value) {
+    return {
       value: value,
-      parent: parent,
-      caseValue: null,
-      setCaseValueOnBreak: false,
-      skipUntilClose: false,
-      skipUntilBreak: false,
       map (fun) {
-        return ZI(value.map(fun), parent);
+        return ZI(value.map(fun));
       },
       tap (fun) {
         fun(value);
-        return ZI(value, parent);
+        return ZI(value);
       },
       filter (fun) {
-        return ZI(value.filter(fun), parent);
+        return ZI(value.filter(fun));
       },
-      case () {
-        return ZI(value, this);
-      },
-      when (fun) {
-        if (!parent.caseValue && fun(value)) {
-          parent.setCaseValueOnBreak = true
+      when (cond, fun) {
+        if (cond === true || cond(value)) {
+          return ZI(fun(value))
         } else {
-          parent.skipUntilBreak = true;
+          return this;
         }
-        return ZI(value, parent);
-      },
-      default () {
-        return this.when(x => true);
-      },
-      break () {
-        if (parent.setCaseValueOnBreak) {
-          parent.caseValue = value;
-          parent.skipUntilClose = true;
-        }
-        parent.setCaseValueOnBreak = false;
-        parent.skipUntilBreak = false;
-        return ZI(value, parent);
-      },
-      close () {
-        parent.skipUntilClose = false;
-        return ZI(value, parent.parent);
       },
       transform (fun) {
-        return ZI(fun(value), parent);
+        return ZI(fun(value));
       },
       log () {
         return this.tap(console.log);
+      },
+      first () {
+        return ZI(value[0]);
+      },
+      replace (i, fun) {
+        const tmp = [].concat(value);
+        tmp[i] = fun(value);
+        return ZI(tmp);
+      },
+      append (v) {
+        if (typeof v === 'String') {
+          return ZI(value + v)
+        } else {
+          return ZI(value.concat(v))
+        }
+      },
+      substring (f, t) {
+        return ZI(value.substring(f, t));
       }
     }
-
-    if (parent && (parent.skipUntilClose || parent.skipUntilBreak)) {
-      const keys = Object.keys(ret);
-      keys.splice(keys.indexOf('close'), 1);
-      keys.splice(keys.indexOf('break'), 1);
-      for (let key of keys) {
-        ret[key] = () => ZI(value, parent);
-      }
-    }
-
-    return ret;
   }
 
   return ZI(input);
