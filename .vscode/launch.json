@@ -9,7 +9,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceRoot}/examples/belong.js"
+      "program": "${workspaceRoot}/examples/spiral.js"
     }
   ]
 }

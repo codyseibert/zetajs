@@ -107,6 +107,21 @@ const Z = function (input) {
           }
         }
         return ZI(-1);
+      },
+      grid (r, c) {
+        return ZI(Array(r).fill().map(_ => Array(c).fill()));
+      },
+      range (from, to) {
+        return ZI(Array(to - from).fill().map((_, i) => i + from))
+      },
+      each (fun) {
+        for (let i = 0; i < value.length; i++) {
+          fun(value[i], i);
+        }
+        return this;
+      },
+      array (n) {
+        return ZI(Array(n).fill());
       }
     }
   }
