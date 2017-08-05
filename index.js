@@ -38,6 +38,9 @@ const Z = function (input) {
         tmp[i] = fun(value);
         return ZI(tmp);
       },
+      reduce (fun, init) {
+        return ZI(value.reduce(fun, init));
+      },
       append (v) {
         if (typeof v === 'String') {
           return ZI(value + v)
@@ -111,6 +114,9 @@ const Z = function (input) {
       grid (r, c) {
         return ZI(Array(r).fill().map(_ => Array(c).fill()));
       },
+      squareGrid (n) {
+        return ZI(Array(n || value).fill().map(_ => Array(n || value).fill()));
+      },
       range (from, to) {
         return ZI(Array(to - from).fill().map((_, i) => i + from))
       },
@@ -122,6 +128,14 @@ const Z = function (input) {
       },
       array (n) {
         return ZI(Array(n).fill());
+      },
+      cycle: function () {
+        const c = function *() {
+          let i = 0;
+          while (true) 
+            yield value[i++ % value.length]
+        }
+        return ZI(c());
       }
     }
   }
