@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/codyseibert/zetajs/issues"
   },
-  "homepage": "https://github.com/codyseibert/zetajs#readme"
+  "homepage": "https://github.com/codyseibert/zetajs#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
 }
